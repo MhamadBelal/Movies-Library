@@ -4,7 +4,7 @@ const server = express();
 
 const PORT = 3000;
 
-const Data= require('./Movie Data/data.json')
+const Data= require('./movieData/data.json')
 
 const movie =new Movie(Data.title,Data.poster_path,Data.overview)
 
