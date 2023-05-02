@@ -16,7 +16,7 @@ To execute this application, follow these instructions:
 * Copy the SSH link for this repository.
 * Clone the repository in your terminal using the following command: `git clone [SSH link]`.
 * Type the command `npm init -y` in your terminal to initialize the app.
-* Enter the following command in your terminal to install the express framework: npm install express.
+* Enter the following command in your terminal to install the express framework: `npm install express`.
 * To run the app and view the output, type the command `npm start` in your terminal.
 
 ## Project Features
