@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const server = express();
 require('dotenv').config();
+const pg = require('pg');
 
 server.use(cors())
 const PORT = 3000;
@@ -11,12 +12,17 @@ const Data = require('./movieData/data.json')
 const apiKey = process.env.APIKey;
 const moveName='Shark Side of the Moon'
 
+server.use(express.json())
+const client = new pg.Client(process.env.DATABASE_URL)
+
 server.get('/', HomeHandeler)
 server.get('/favorite',favoriteHandeler)
 server.get('/trending', trendingHandeler)
 server.get('/search', searchHandeler)
 server.get('/credits',creditsHandeler)
 server.get('/popular',popularHandeler)
+server.get('/getMovies',getMoviesHandeler)
+server.post('/getMovies',addMovieHandeler)
 server.get('*',pageNotFoundHanderler)
 server.use(errorHandler)
 
@@ -132,6 +138,40 @@ function popularHandeler(req,res)
     }
 }
 
+function getMoviesHandeler(req,res)
+{
+    const sql=`SELECT * FROM moveDatebase`
+    client.query(sql)
+    .then(data=>{
+        res.send(data.rows);
+    })
+    .catch(error=>{
+        errorHandler(error,req, res)
+    })
+}
+
+
+
+function addMovieHandeler(req,res)
+{
+    const move = req.body;
+    console.log(move);
+    const sql = `INSERT INTO moveDatebase (title, summary, mins)
+    VALUES ($1, $2, $3);`
+    const values = [move.title , move.summary, move.mins]; 
+    client.query(sql,values)
+    .then(data=>{
+        res.send("The data has been added successfully");
+    })
+    .catch((error)=>{
+        errorHandler(error,req,res)
+    })
+}
+
+
+
+
+
 
 function errorHandler(error,req, res)  {
     res.status(500).json({
@@ -139,9 +179,6 @@ function errorHandler(error,req, res)  {
         responseText: "Sorry, something went wrong"
     })
 }
-
-
-
 
 
 
@@ -169,7 +206,9 @@ function Trending(id, name, original_name, character, popularity) {
 }
 
 
-
-server.listen(PORT, () => {
-    console.log(`Listening on ${PORT}: I'm ready`)
+client.connect()
+.then(()=>{
+    server.listen(PORT, () => {
+        console.log(`Listening on ${PORT}: I'm ready`)
+    })
 })
