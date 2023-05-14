@@ -23,6 +23,9 @@ server.get('/credits',creditsHandeler)
 server.get('/popular',popularHandeler)
 server.get('/getMovies',getMoviesHandeler)
 server.post('/getMovies',addMovieHandeler)
+server.get('/getMovies/:id',getSpecificMoviesHandeler)
+server.put('/updateMovie/:id',updateMovieHandeler)
+server.delete('/deleteMovie/:id',deleteMovieHandeler)
 server.get('*',pageNotFoundHanderler)
 server.use(errorHandler)
 
@@ -169,6 +172,50 @@ function addMovieHandeler(req,res)
 }
 
 
+function updateMovieHandeler(req,res)
+{
+    const {id} = req.params;
+    const sql = `UPDATE moveDatebase
+    SET title = $1, summary=$2, mins=$3
+    WHERE id = ${id};`
+    const {title,summary,mins} = req.body;
+    const values = [title,summary,mins];
+    client.query(sql,values).then((data)=>{
+        res.send(data)
+    })
+    .catch((error)=>{
+        errorHandler(error,req,res)
+    })
+}
+
+function deleteMovieHandeler(req,res)
+{
+    const id = req.params.id;
+    const sql = `DELETE FROM moveDatebase WHERE id=${id};`
+    client.query(sql)
+    .then((data)=>{
+        res.status(202).send(data)
+    })
+    .catch((error)=>{
+        errorHandler(error,req,res)
+    })
+}
+
+
+function getSpecificMoviesHandeler(req,res)
+{
+    const id = req.params.id;
+    console.log(id);
+    const sql = `Select * FROM moveDatebase WHERE id=${id};`
+    client.query(sql)
+    .then((data)=>{
+        res.send(data.rows)
+    })
+    .catch((error)=>{
+        errorHandler(error,req,res)
+    })
+}
+
 
 
 
@@ -179,7 +226,6 @@ function errorHandler(error,req, res)  {
         responseText: "Sorry, something went wrong"
     })
 }
-
 
 
 function Movie(title, poster_path, overview) {
