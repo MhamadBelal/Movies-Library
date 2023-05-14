@@ -34,6 +34,9 @@ It defines several routes for handling different requests:
 * A route with a method of GET and a path of /popular that responds with a JSON object containing popular movies.
 * A route with a method of GET and a path of /getMovies to get all the data of movies in my demo15 database.
 * A route with a method of POST and a path of /getMovies to add data to my demo15 database.
+* A route with a method of GET and a path of /getMovies/:id to get a specific movie from my demo15 database.
+* A route with a method of PUT and a path of /updateMovie/:id to update a specific movie from my demo15 database.
+* A route with a method of DELETE and a path of /deleteMovie/:id to delete a specific movie from my demo15 database.
 * A route with a method of GET and a path of * that responds with a 404 status code and an error message indicating that the requested page was not found.
 * A middleware function that handles server errors by sending a 500 status code and an error message indicating that something went wrong.
 * The program also defines a Movie constructor function that creates objects with properties for a movie's title, poster path, and overview.
@@ -41,4 +44,4 @@ It defines several routes for handling different requests:
 
 The program uses a JSON file to populate the movie object with data, and it listens for incoming requests on port 3000, and it uese the APIkey that exists in .env.sample file.
 
-the programm started to connect to my demo15 database
+Then, the programm started to connect to my demo15 database
