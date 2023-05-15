@@ -33,7 +33,7 @@ It defines several routes for handling different requests:
 * A route with a method of GET and a path of /credits that responds with a JSON object containing credits of a moveie with id **634649**.
 * A route with a method of GET and a path of /popular that responds with a JSON object containing popular movies.
 * A route with a method of GET and a path of /getMovies to get all the data of movies in my demo15 database.
-* A route with a method of POST and a path of /getMovies to add data to my demo15 database.
+* A route with a method of POST and a path of /addMovie to add data to my demo15 database.
 * A route with a method of GET and a path of /getMovies/:id to get a specific movie from my demo15 database.
 * A route with a method of PUT and a path of /updateMovie/:id to update a specific movie from my demo15 database.
 * A route with a method of DELETE and a path of /deleteMovie/:id to delete a specific movie from my demo15 database.
