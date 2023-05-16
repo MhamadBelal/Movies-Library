@@ -6,7 +6,7 @@ require('dotenv').config();
 const pg = require('pg');
 
 server.use(cors())
-const PORT = process.env.PortNum || 3000;
+const PORT = process.env.PortNum || 3001;
 const axios = require('axios');
 const Data = require('./movieData/data.json')
 const apiKey = process.env.APIKey;
