@@ -159,9 +159,9 @@ function addMovieHandeler(req,res)
 {
     const move = req.body;
     console.log(move);
-    const sql = `INSERT INTO moveDatebase (title, overview, poster_path, release_date)
+    const sql = `INSERT INTO moveDatebase (name, popularity, character, original_name)
     VALUES ($1, $2, $3, $4);`
-    const values = [move.title , move.overview, move.poster_path, move.release_date]; 
+    const values = [move.name , move.popularity, move.character, move.original_name]; 
     client.query(sql,values)
     .then(data=>{
         res.send("The data has been added successfully");
@@ -176,10 +176,10 @@ function updateMovieHandeler(req,res)
 {
     const {id} = req.params;
     const sql = `UPDATE moveDatebase
-    SET title = $1, overview=$2, poster_path=$3, release_date=$4
+    SET name = $1, popularity=$2, character=$3, original_name=$4
     WHERE id = ${id};`
-    const {title,overview,poster_path,release_date} = req.body;
-    const values = [title,overview,poster_path,release_date];
+    const {name,popularity,character,original_name} = req.body;
+    const values = [name,popularity,character,original_name];
     client.query(sql,values).then((data)=>{
         res.send(data)
     })
