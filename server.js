@@ -181,7 +181,14 @@ function updateMovieHandeler(req,res)
     const {name,popularity,character,original_name} = req.body;
     const values = [name,popularity,character,original_name];
     client.query(sql,values).then((data)=>{
-        res.send(data)
+        const sql = `SELECT * FROM moveDatebase;`;
+            client.query(sql)
+                .then(allData => {
+                    res.send(allData.rows)
+                })
+                .catch((error) => {
+                    errorHandler(error, req, res)
+                })
     })
     .catch((error)=>{
         errorHandler(error,req,res)
