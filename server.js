@@ -6,7 +6,7 @@ require('dotenv').config();
 const pg = require('pg');
 
 server.use(cors())
-const PORT = process.env.PortNum || 3001;
+const PORT = process.env.PortNum || 3002;
 const axios = require('axios');
 const Data = require('./movieData/data.json')
 const apiKey = process.env.APIKey;
@@ -159,9 +159,9 @@ function addMovieHandeler(req,res)
 {
     const move = req.body;
     console.log(move);
-    const sql = `INSERT INTO moveDatebase (name, popularity, character, original_name)
-    VALUES ($1, $2, $3, $4);`
-    const values = [move.name , move.popularity, move.character, move.original_name]; 
+    const sql = `INSERT INTO moveDatebase (name, popularity, character, original_name,comment)
+    VALUES ($1, $2, $3, $4, $5);`
+    const values = [move.name , move.popularity, move.character, move.original_name, move.comment]; 
     client.query(sql,values)
     .then(data=>{
         res.send("The data has been added successfully");
@@ -176,10 +176,10 @@ function updateMovieHandeler(req,res)
 {
     const {id} = req.params;
     const sql = `UPDATE moveDatebase
-    SET name = $1, popularity=$2, character=$3, original_name=$4
+    SET name = $1, popularity=$2, character=$3, original_name=$4, comment=$5
     WHERE id = ${id};`
-    const {name,popularity,character,original_name} = req.body;
-    const values = [name,popularity,character,original_name];
+    const {name,popularity,character,original_name,comment} = req.body;
+    const values = [name,popularity,character,original_name,comment];
     client.query(sql,values).then((data)=>{
         const sql = `SELECT * FROM moveDatebase;`;
             client.query(sql)

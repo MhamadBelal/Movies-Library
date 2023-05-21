@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS moveDatebase (
     name VARCHAR(255),
     popularity VARCHAR(500),
     character VARCHAR(255),
-    original_name Date
+    original_name Date,
+    comment VARCHAR(300)
 );
